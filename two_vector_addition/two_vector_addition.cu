@@ -7,18 +7,22 @@ with error checking for memory allocation, data transfer, kernel launch, and dev
 #include <cuda_runtime.h>
 
 // Kernel function to add two vectors
-__global__ void add(int *a, int *b, int *c)
+__global__ void add(int *a, int *b, int *c, int n)
 {
     int i = threadIdx.x;
-
-    c[i] = a[i] + b[i];
+    // Check if the thread index is within bounds
+    if (i < n)
+    {
+        c[i] = a[i] + b[i];
+    }
 }
 // device mean GPU, Host mean CPU
 int main()
 {
     // Host arrays
+    int n = 10;
     int a[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-    int b[10] = {10, 20, 30, 40, 50, 60, 70, 80, 90, 100};
+    int b[10] = {10, 9, 8, 7, 6, 5, 4, 3, 2, 1};
     int c[10];
 
     // Device arrays
@@ -62,7 +66,7 @@ int main()
     }
 
     // Launch kernel to add vectors
-    add<<<1, 10>>>(d_a, d_b, d_c);
+    add<<<1, 10>>>(d_a, d_b, d_c, n);
 
     // Check for kernel launch errors
     cudaError_t err = cudaGetLastError();
