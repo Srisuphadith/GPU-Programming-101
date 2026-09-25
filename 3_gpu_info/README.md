@@ -25,26 +25,57 @@ Peak memory bandwidth          : 112.13 GB/s
 
 ### max_block_per_sm (exclude other constraints)
 ```
-max_block_per_sm = 
-Max_threads_per_SM / Max_threads_per_block = 
-2048 / 1024 = 
-2 block_per_sm
+Maximum blocks per SM =
+
+Max threads per SM / Max threads per block =
+
+2048 / 1024 =
+
+2 blocks per SM
 ```
 
+### With register constraints (exclude other constraints)
 ```
 1 block = 256 threads
 
 1 SM can handle:
+
 2048 / 256 = 8 blocks
 
-If 1 thread uses 32 registers:
+If each thread uses 32 registers:
 
 1 block uses:
+
 256 × 32 = 8,192 registers
 
 8 blocks use:
+
 8 × 8,192 = 65,536 registers
 
-which equals Registers per SM.
+which equals the total number of registers available per SM.
+```
 
+### With shared memory constraints (exclude other constraints)
+```
+1 block = 256 threads
+
+1 SM can handle:
+
+2048 / 256 = 8 blocks
+
+If 1 block uses 10 KB of shared memory:
+
+Shared memory per block = 49 KB
+
+10 KB < 49 KB → The shared memory usage per block is within the limit.
+
+For 8 blocks:
+
+8 × 10 KB = 80 KB of shared memory
+
+Shared memory per SM = 98 KB
+
+80 KB < 98 KB → The total shared memory usage is within the SM limit.
+
+Therefore, the SM can handle all 8 blocks based on the shared memory constraint.
 ```
