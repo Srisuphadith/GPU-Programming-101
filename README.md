@@ -8,7 +8,7 @@ explain concept of GPU structure, memory, etc.
 ---
 ### Environment
 
-- GPU: GTX1050 VRAM 2 GiB
+- GPU: NVIDIA GeForce GTX 1050 VRAM DDR5 2 GB
 - CPU: Intel(R) Core(TM) i7-14700K
 - OS: Ubuntu 22.04.5 LTS
 - Driver Version: 580.178.04
